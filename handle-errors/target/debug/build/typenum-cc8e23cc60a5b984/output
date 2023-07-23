@@ -1,0 +1,3 @@
+cargo:rerun-if-changed=build/main.rs
+cargo:rustc-env=TYPENUM_BUILD_CONSTS=/home/dru/Rust_projects/webapp_api/handle-errors/target/debug/build/typenum-cc8e23cc60a5b984/out/consts.rs
+cargo:rustc-env=TYPENUM_BUILD_OP=/home/dru/Rust_projects/webapp_api/handle-errors/target/debug/build/typenum-cc8e23cc60a5b984/out/op.rs
