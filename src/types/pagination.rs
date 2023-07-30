@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use handle_error::Error; // internal library
+use handle_errors::Error; // internal library
 
 // to capture the values of the *start & *end values in the URL
 /// Pagination number range that is being extracted from query params

@@ -1,0 +1,6 @@
+   Compiling webapp_api v0.1.0 (/home/dru/Rust_Projects/webapp_api)
+    Finished dev [unoptimized + debuginfo] target(s) in 3.94s
+     Running `target/debug/webapp_api`
+[2023-07-26T22:29:41Z ERROR webapp_api] This is an error test!
+[2023-07-26T22:29:41Z INFO  warp::server] Server::run; addr=127.0.0.1:3030
+[2023-07-26T22:29:41Z INFO  warp::server] listening on http://127.0.0.1:3030

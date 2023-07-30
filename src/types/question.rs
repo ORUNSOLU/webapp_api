@@ -1,4 +1,4 @@
-use serde::{Serialize,Deserialize}
+use serde::{Serialize,Deserialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Question {

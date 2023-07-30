@@ -7,7 +7,7 @@ use crate::types::{
     question::QuestionId,
 };
 
-async fn add_answer(store: Store, params: HashMap<String, String>) -> Result<impl Reply, Rejection> {
+pub async fn add_answer(store: Store, params: HashMap<String, String>) -> Result<impl Reply, Rejection> {
     let answer = Answer {
         id: AnswerId("1".to_string()),
         content: params.get("content").unwrap().to_string(),
