@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 # each library's dependencies are added to the TOML file
 warp = "0.3"
+sqlx = { version = "0.5", features = ["runtime-tokio-rustls"] }

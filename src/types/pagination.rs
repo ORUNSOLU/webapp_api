@@ -5,10 +5,10 @@ use handle_errors::Error; // internal library
 /// Pagination number range that is being extracted from query params
 #[derive(Debug)]
 pub struct Pagination {
-    /// the index of the first item to be returned
-    pub start: usize,
     /// the index of the last item to be returned
-    pub end: usize
+    pub limit: Option<u32>
+    /// the index of the first item to be returned
+    pub offset: u32
 }
 
 // performs checks on the Pagination struct & returns the struct if okay
@@ -18,25 +18,19 @@ pub struct Pagination {
 /// # Example usage
 /// ```rust
 /// let mut query = HashMap::new();
-/// query.insert("start".to_string(), "1".to_string());
-/// query.insert("end".to_string(), "10".to_string());
-/// let p = types::pagination::extract_pagination(query).unwrap();
-/// assert_eq!(p.start, 1);
+/// query.insert("limit".to_string(), "1".to_string());
+/// query.insert("offset".to_string(), "10".to_string());
+/// let p = pagination::extract_pagination(query).unwrap();
+/// assert_eq!(p.start, Some(1));
 /// assert_eq!(p.end, 10);
 /// ```
 pub fn get_pagination(params: HashMap<String, String>) -> Result<Pagination, Error> {
-    if params.contains_key("start") && params.contains_key("end") {
-        let start = params.get("start").unwrap().parse::<usize>().unwrap();
-        let end = params.get("end").unwrap().parse::<usize>().unwrap();
-        // check that the *end parameter is less than the total number of questions.
-        if start < end && end < params.keys().count() {
-        return Ok(
-            Pagination {
-                start: params.get("start").unwrap().parse::<usize>().map_err(Error::ParseError)?,
-                end: params.get("end").unwrap().parse::<usize>().map_err(Error::ParseError)?
-            }
-        );
-        }
+    // continue from here;
+    if params.contains_key("limit") && params.contains_key("offset") {
+        return Ok(Pagination {
+            limit: Some(params.get("limit").unwrap().parse::<u32>().map_err(Error::ParseError)?),
+            offset: params.get("offset").unwrap().parse::<u32>().map_err(Error::ParseError)?
+        });
     }
     Err(Error::MissingParameters)
 }

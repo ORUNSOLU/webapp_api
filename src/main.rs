@@ -4,10 +4,12 @@ use crate::store::Store;
 use crate::routes::question::{get_question, add_question, update_question, delete_question};
 use crate::routes::answer::add_answer;
 use tracing_subscriber::fmt::format::FmtSpan;
+use types::*;
 
 mod store;
 mod routes;
 mod types;
+mod store;
 
 #[tokio::main]
 async fn main() {
@@ -15,7 +17,9 @@ async fn main() {
     let log_filter = std::env::var("RUST_LOG")
         .unwrap_or_else(|_| "practical_rust_book=info,warp=error".to_owned());
 
-    let store = Store::new();
+    // we would use the below if we were to include `username & password`
+    // "postgres://username:password@localhost:5432/rustwebdev" to include username & pass
+    let store = Store::new("postgres://localhost:5432/rustwebdev");
     let store_filter = warp::any().map(move || store.clone());
 
     tracing_subscriber::fmt()
@@ -53,6 +57,7 @@ async fn main() {
 
     let update_question = warp::put()
         .and(warp::path("questions"))
+        .and(warp::path::param::<i32>())
         .and(warp::path::param::<String>()) 
         .and(warp::path::end()) // closes the path definition
         .and(store_filter.clone()) // adds our store to the route so we can pass it to the route handler later
@@ -61,6 +66,7 @@ async fn main() {
 
     let delete_question = warp::delete()
         .and(warp::path("questions"))
+        .and(warp::path::param::<i32>())
         .and(warp::path::param::<String>())
         .and(warp::path::end())
         .and(store_filter.clone())

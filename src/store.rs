@@ -1,6 +1,6 @@
-use std::sync::Arc;
-use tokio::sync::RwLock;
-use std::collections::HashMap;
+use sqlx::postgres::{PgPoolOptions, PgPool, PgRow};
+use sqlx::Row;
+use handle_errors::Error; // internal Library
 
 use crate::types::{
     answer::{Answer, AnswerId},
@@ -9,20 +9,40 @@ use crate::types::{
 
 #[derive(Clone, Debug)]
 pub struct Store {
-    pub questions: Arc<RwLock<HashMap<QuestionId, Question>>>,
-    pub answers: Arc<RwLock<HashMap<AnswerId, Answer>>>
+    pub conn: PgPool
 }
 
 impl Store {
-    pub fn new() -> Self {
+    pub async fn new(db_url: &str) -> Self {
+        let db_pool = match PgPoolOptions::new()
+            .max_connections(5)
+            .connect(db_url)
+            .await {
+                Ok(pool) => pool,
+                Err(e) => panic!("Could not establish database connection: {:?}", e),
+            }
         Self {
-            questions: Arc::new(RwLock::new(Self::init())),
-            answers: Arc::new(RwLock::new(HashMap::new()))
+            conn: db_pool
         }
     }
 
-    pub fn init() -> HashMap<QuestionId, Question> {
-        let file = include_str!("../questions.json");
-        serde_json::from_str(file).expect("Failed to read file.")
+    pub async fn get_questions(&self, limit: Option<u32>, offset: u32) -> Result<Vec<Question>, sqlx::Error> {
+        match sqlx::query("SELECT * FROM questions LIMIT $1 OFFSET $2")
+            .bind(limit) // $X is replaced with what we pass to *bind
+            .bind(offset)
+            .map(|row: PgRow| Question { // use MAP to get rows returned by PG, and create a Question from it
+                id: QuestionId(row.get("id")),
+                title: row.get("title"),
+                content: row.get("content"),
+                tags: row.get("tags"),
+            } )
+            .fetch_all(&self.conn)
+            .await {
+                Ok(questions) => Ok(questions),
+                Err(e) => {
+                    tracing::event!(tracing::Level::ERROR, "{:?}", e);
+                    Err(Error::DatabaseError)
+                }
+        }
     }
 }

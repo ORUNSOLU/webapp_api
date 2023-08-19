@@ -19,12 +19,15 @@ use warp::{
         body::BodyDeserializeError, cors::CorsForbidden
     }
 };
+use sqlx::error::Error as SqlxError;
+
 
 #[derive(Debug)]
 pub enum Error {
     ParseError(std::num::ParseIntError),
     MissingParameters,
-    QuestionNotFound
+    QuestionNotFound,
+    DatabaseQueryError(SqlxError),
 }
 
 // implement display for the Errors
@@ -33,7 +36,10 @@ impl std::fmt::Display for Error {
         match *self { 
             Self::ParseError(ref err) => write!(f, "Error parsing parameter: {}", err),
             Self::MissingParameters => write!(f, "Some parameters are missing"),
-            Self::QuestionNotFound => write!(f, "Question not found")
+            Self::QuestionNotFound => write!(f, "Question not found"),
+            Self::DatabaseQueryError(e) => { 
+                write!(f, "Query could not be executed", e) 
+            }
         }
     }
 }
