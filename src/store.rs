@@ -93,7 +93,10 @@ impl Store {
         .fetch_one(&self.conn)
         .await {
             Ok(question) => Ok(question),
-            Err(e) => Err(WarpError::DatabaseQueryError)
+            Err(e) => {
+                tracing::event!(tracing::Level::ERROR, "{:?}", e);
+                Err(WarpError::DatabaseQueryError)
+            }
         }
     }
 

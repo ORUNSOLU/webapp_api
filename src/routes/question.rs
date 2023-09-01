@@ -29,11 +29,10 @@ pub async fn add_question(store: Store, new_question: NewQuestion) -> Result<imp
 }
 
 pub async fn update_question(id: i32, store: Store, question: Question) -> Result<impl Reply, Rejection> {
-    let res = match store.update_question(question, id).await {
-        Ok(res) => res,
+    match store.update_question(question, id).await {
+        Ok(res) => Ok(warp::reply::json(&res)),
         Err(e) => Err(warp::reject::custom(e))
-    };
-    Ok(warp::reply::json(&res))
+    }
 }
 
 pub async fn delete_question(id: i32, store: Store) -> Result<impl Reply, Rejection> {
