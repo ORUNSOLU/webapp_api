@@ -1,3 +1,4 @@
+// this module should handle all DB connections for all routes
 use sqlx::postgres::{PgPoolOptions, PgPool, PgRow};
 use sqlx::Row;
 use handle_errors::WarpError; // internal Library
