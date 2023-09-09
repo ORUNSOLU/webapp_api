@@ -15,18 +15,22 @@ mod types;
 async fn main() {
     // environment variable to filter logs
     let log_filter = std::env::var("RUST_LOG").unwrap_or_else(|_| { 
-        "handle_errors=warn,webapp_api=warn".to_owned()
+        "handle_errors=warn,rust_training=info ,warp=error".to_owned()
     });
 
     // we would use the connection string below if we were to include `username & password`
-    // "postgres://username:password@localhost:5432/rustwebdev"
-    let store = Store::new("postgres://localhost:5432/rustwebdev").await;
+    // "postgres://username:password@localhost:5432/db_name"
+    let store = Store::new("postgres://postgres:postgres@localhost:5432/rustwebdev").await;
+    sqlx::migrate!().run(&store.clone().conn).await.expect("Unable to run the migrations.");
+
     let store_filter = warp::any().map(move || store.clone());
 
-    tracing_subscriber::fmt()
-        .with_env_filter(log_filter) // use the filter above to determine traces to log
-        .with_span_events(FmtSpan::CLOSE) // records events when each span closes
-        .init();
+    // tracing_subscriber::fmt()
+    //     .with_env_filter(log_filter) // use the filter above to determine traces to log
+    //     .with_span_events(FmtSpan::CLOSE) // records events when each span closes
+    //     .init();
+
+    tracing_subscriber::fmt().with_env_filter(log_filter).with_span_events(FmtSpan::CLOSE).init();
 
     // Cross Origin
     let cors = warp::cors()

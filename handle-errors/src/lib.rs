@@ -6,6 +6,7 @@ use warp::{
 };
 use tracing::{event, Level, instrument};
 
+// custom errors to map values to
 #[derive(Debug)]
 pub enum WarpError {
     ParseError(std::num::ParseIntError),
