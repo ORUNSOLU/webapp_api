@@ -1,0 +1,12 @@
+/home/dru/Rust_projects/webapp_api/handle-errors/target/debug/deps/libasync_trait-76ccfbecf89398ea.so: /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/lib.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/args.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/bound.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/expand.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/lifetime.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/parse.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/receiver.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/verbatim.rs
+
+/home/dru/Rust_projects/webapp_api/handle-errors/target/debug/deps/async_trait-76ccfbecf89398ea.d: /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/lib.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/args.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/bound.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/expand.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/lifetime.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/parse.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/receiver.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/verbatim.rs
+
+/home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/lib.rs:
+/home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/args.rs:
+/home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/bound.rs:
+/home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/expand.rs:
+/home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/lifetime.rs:
+/home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/parse.rs:
+/home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/receiver.rs:
+/home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-trait-0.1.73/src/verbatim.rs:
