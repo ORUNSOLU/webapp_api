@@ -30,6 +30,7 @@ struct BadWordsResponse {
 
 // filter out bad words from `String` passed in.
 pub async fn check_profanity(content: String) -> Result<String, handle_errors::WarpError> {
+    // retry communicating with the API incase of initial failure
     let retry_policy = ExponentialBackoff::builder().build_with_max_retries(3);
     let client = ClientBuilder::new(reqwest::Client::new())
         .with(RetryTransientMiddleware::new_with_policy(retry_policy))
@@ -37,7 +38,7 @@ pub async fn check_profanity(content: String) -> Result<String, handle_errors::W
     
     let res = client
         .post("https://api.apilayer.com/bad_words?censor_character=*")
-        .header("apikey", "YdeCTRJm2dGvwfyuZkTt2JlztBfFMQ2Y")
+        .header("apikey", "YdeCTRJm2dGvwfyuZkTt2JlztBfFMQ2Y") // I know this shouldn't be here; just practicing
         .body(content)
         .send()
         .await

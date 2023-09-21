@@ -1,0 +1,13 @@
+/home/dru/Rust_projects/webapp_api/handle-errors/target/debug/deps/sha2-5bae264dc9729f75.rmeta: /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/lib.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/core_api.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/sha256.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/sha512.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/consts.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/sha256/soft.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/sha256/x86.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/sha512/soft.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/sha512/x86.rs
+
+/home/dru/Rust_projects/webapp_api/handle-errors/target/debug/deps/sha2-5bae264dc9729f75.d: /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/lib.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/core_api.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/sha256.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/sha512.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/consts.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/sha256/soft.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/sha256/x86.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/sha512/soft.rs /home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/sha512/x86.rs
+
+/home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/lib.rs:
+/home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/core_api.rs:
+/home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/sha256.rs:
+/home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/sha512.rs:
+/home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/consts.rs:
+/home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/sha256/soft.rs:
+/home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/sha256/x86.rs:
+/home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/sha512/soft.rs:
+/home/dru/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sha2-0.10.7/src/sha512/x86.rs:
