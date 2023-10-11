@@ -52,14 +52,15 @@ impl Store {
         }
     }
 
-    pub async fn add_question(&self, new_question: NewQuestion) -> Result<Question, WarpError> {
-        match sqlx::query("INSERT INTO questions (title, content, tags)
-                            VALUES ($1, $2, $3)
+    pub async fn add_question(self, new_question: NewQuestion, account_id: AccountId) -> Result<Question, WarpError> {
+        match sqlx::query("INSERT INTO questions (title, content, tags, account_id)
+                            VALUES ($1, $2, $3, $4)
                             RETURNING id, title, content, tags"
             )
             .bind(new_question.title)
             .bind(new_question.content)
             .bind(new_question.tags)
+            .bind(account_id.0)
             .map(|row: PgRow| Question {
                 id: QuestionId(row.get("id")),
                 title: row.get("title"),
@@ -76,16 +77,18 @@ impl Store {
             }
     }
 
-    pub async fn update_question(&self, question: Question, question_id: i32) -> Result<Question, WarpError> {
+    pub async fn update_question(&self, question: Question, question_id: i32, account_id: AccountId) -> Result<Question, WarpError> {
+        println!("Account ID: {:?}", account_id.0);
         match sqlx::query("UPDATE questions
                             SET title = $1, content = $2, tags = $3
-                            WHERE id = $4
+                            WHERE id = $4 AND account_id = $5
                             RETURNING id, title, content, tags
         ")
         .bind(question.title)
         .bind(question.content)
         .bind(question.tags)
         .bind(question_id)
+        .bind(account_id.0)
         .map(|row: PgRow| Question {
             id: QuestionId(row.get("id")),
             title: row.get("title"),
@@ -115,12 +118,13 @@ impl Store {
             }
     }
 
-    pub async fn add_answer(&self, new_answer: NewAnswer) -> Result<Answer, WarpError> {
+    pub async fn add_answer(&self, new_answer: NewAnswer, account_id: AccountId) -> Result<Answer, WarpError> {
         match sqlx::query(
-                "INSERT INTO answers (content, question_id) VALUES ($1, $2)"
+                "INSERT INTO answers (content, corresponding_question, account_id) VALUES ($1, $2, $3)"
             )
             .bind(new_answer.content)
             .bind(new_answer.question_id.0)
+            .bind(account_id.0)
             .map(|row: PgRow| Answer {
                 id: AnswerId(row.get("id")),
                 content: row.get("content"),
@@ -171,6 +175,20 @@ impl Store {
                 Err(error) => {
                     tracing::event!(tracing::Level::ERROR, "{}", error);
                     Err(WarpError::DatabaseQueryError(error))
+                }
+            }
+    }
+
+    pub async fn is_question_owner(&self, question_id: i32, account_id: &AccountId) -> Result<bool, WarpError> {
+        match sqlx::query("SELECT * from questions where id = $1 and account_id = $2")
+            .bind(question_id)
+            .bind(account_id.0)
+            .fetch_optional(&self.conn)
+            .await {
+                Ok(question) => Ok(question.is_some()),
+                Err(e) => {
+                    tracing::event!(tracing::Level::ERROR, "{:?}", e);
+                    Err(WarpError::DatabaseQueryError(e))
                 }
             }
     }

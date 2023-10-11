@@ -1,9 +1,8 @@
+#![warn(clippy::all)]
 use warp::{http::Method, Filter};
 use handle_errors::return_error; // internal library
 use crate::store::Store;
-use crate::routes::question::{get_question, add_question, update_question, delete_question};
 use crate::routes::authentication;
-use crate::routes::answer::add_answer;
 use tracing_subscriber::fmt::format::FmtSpan;
 // use types::*;
 
@@ -44,7 +43,7 @@ async fn main() {
         .and(warp::path::end())
         .and(warp::query())
         .and(store_filter.clone())
-        .and_then(get_question)
+        .and_then(routes::question::get_question)
         .with(warp::trace(|info| {
             tracing::info_span!(
                 "get_questions request",
@@ -64,31 +63,35 @@ async fn main() {
     let add_question = warp::post()
         .and(warp::path("questions"))
         .and(warp::path::end())
+        .and(routes::authentication::auth())
         .and(store_filter.clone())
         .and(warp::body::json())
-        .and_then(add_question);
+        .and_then(routes::question::add_question);
 
     let update_question = warp::put()
         .and(warp::path("questions"))
         .and(warp::path::param::<i32>())
         .and(warp::path::end()) // closes the path definition
+        .and(routes::authentication::auth()) // verify the token only when the client is attempting to manipulate data
         .and(store_filter.clone()) // adds our store to the route so we can pass it to the route handler later
         .and(warp::body::json()) // extracts the JSON body that's added to the parameters as well
-        .and_then(update_question);
+        .and_then(routes::question::update_question);
 
     let delete_question = warp::delete()
         .and(warp::path("questions"))
         .and(warp::path::param::<i32>())
         .and(warp::path::end())
+        .and(routes::authentication::auth())
         .and(store_filter.clone())
-        .and_then(delete_question);
+        .and_then(routes::question::delete_question);
 
     let add_answer = warp::post()
         .and(warp::path("answers"))
         .and(warp::path::end())
+        .and(routes::authentication::auth())
         .and(store_filter.clone())
         .and(warp::body::form()) // this uses *url-form encoded, instead of JSON
-        .and_then(add_answer);
+        .and_then(routes::answer::add_answer);
 
     let registration = warp::post()
         .and(warp::path("registration"))

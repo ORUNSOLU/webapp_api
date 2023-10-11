@@ -23,6 +23,8 @@ pub enum WarpError {
     ReqwestAPIError(ReqwestError),
     MiddlewareReqwestAPIError(MiddlewareReqwestError),
     WrongPassword,
+    Unauthorized,
+    CannotDecryptToken,
     ArgonLibraryError(ArgonError),
 }
 
@@ -37,6 +39,8 @@ impl std::fmt::Display for WarpError {
             Self::DatabaseQueryError(_) => write!(f, "Cannot update, invalid Data") ,
             Self::ClientError(err) => write!(f, "External Client error: {}", err),
             Self::WrongPassword => write!(f, "Wrong password"),
+            Self::CannotDecryptToken => write!(f, "Unable to parse login authorization token"),
+            Self::Unauthorized => write!(f, "No permission to change the underlying resource"),
             Self::ArgonLibraryError(_) => write!(f, "Cannot verify password"),
             Self::ServerError(err) => write!(f, "External Server error: {}", err),
         }
@@ -78,6 +82,9 @@ pub async fn return_error(r: Rejection) -> Result<impl Reply, Rejection> {
     } else if let Some(crate::WarpError::MiddlewareReqwestAPIError(e)) = r.find() {
         event!(Level::ERROR, "{}", e);
         Ok(warp::reply::with_status("Internal Server error".to_string(), StatusCode::INTERNAL_SERVER_ERROR))
+    } else if let Some(crate::WarpError::Unauthorized) = r.find() {
+        event!(Level::ERROR, "Not matching account id");
+        Ok(warp::reply::with_status("No permission to change underlying resource".to_string(), StatusCode::UNAUTHORIZED,))
     } else if let Some(error) = r.find::<CorsForbidden>() {
         event!(Level::ERROR, "CORS forbidden error: {}", error);
         Ok(warp::reply::with_status(error.to_string(),StatusCode::FORBIDDEN))
